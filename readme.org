@@ -53,3 +53,23 @@
 
   if you have a decent quality recording, in 10 minutes you can get
   the frequency to one part in 10 million.  pretty impressive, i think!
+
+* how it works
+  
+  i fourier transform the input signal to measure the peak frequency.
+  before transforming, i hit the signal with a Gaussian window... i
+  choose the width so that frequency peaks will have a Gaussian shape
+  with a width of ~3 frequency bins.  This can be fit accurately with
+  a Gaussian profile, yielding a good estimate of the true frequency.
+
+  i use a scipy function to automatically identify the peaks, which
+  seems to work
+
+  and i attempt to identify an "optimum" length for the FFT.  it seems
+  to work pretty well.
+
+* todo
+  
+  do a better job estimating the uncertainty.  automatically suggest
+  whether the user needs a longer recording, or if we have enough
+  data.
