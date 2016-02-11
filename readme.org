@@ -3,6 +3,17 @@
   small program that analyzes a recording of a watch or clock and
   tells you how slow or fast it runs
 
+* usage
+  
+  #+BEGIN_EXAMPLE
+  python fourier.py recording.wav
+  #+END_EXAMPLE
+  
+  =recording.wav= should be a mono sound file.  results aren't
+  sensitive to the sampling frequency, unless it's too low.  but
+  there's no reason not to just use the 44.1k rate that's pretty
+  standard.
+
 * examples
 
   with a good-quality recording, you'll see something like this:
@@ -29,3 +40,16 @@
 * accuracy
 
   [[./test-results/plots/error-plot.png]]
+
+  i've tested the program using synthetic signals generated a couple
+  of different ways.  the results are summarized in the plot above
+
+  the fractional uncertainty in the measurement scales falls with the
+  length of the recording to the 1.5 power.  it also depends on noise.
+
+  if your goal is to regulate the clock to ~ 1 second / day, 30
+  seconds or a minute of high-quality recording should do it.  even
+  with a low quality recording, 5 minutes or so should get you there.
+
+  if you have a decent quality recording, in 10 minutes you can get
+  the frequency to one part in 10 million.  pretty impressive, i think!
