@@ -27,6 +27,12 @@ class MyPlots
       error_plot
     end
 
+    t.def_figure('audacity-test') do
+      mnras_style
+      enter_page_short
+      audacity_test
+    end
+
   end
 
   def enter_page
@@ -45,6 +51,28 @@ class MyPlots
     t.default_page_height = t.default_page_width * \
       (t.default_frame_right - t.default_frame_left) / \
       (t.default_frame_top - t.default_frame_bottom)
+
+    t.default_enter_page_function
+  end
+
+  def enter_page_short
+    mnras_style
+
+    t.xlabel_shift = 2.0
+    t.ylabel_shift = 1.75
+
+    t.default_frame_left   = 0.12
+    t.default_frame_right  = 0.94
+    t.default_frame_top    = 0.92
+    t.default_frame_bottom = 0.18
+
+    t.default_page_width  = 72 * 3.5
+
+    $golden_ratio = 1.61803398875
+
+    t.default_page_height = t.default_page_width * \
+      (t.default_frame_right - t.default_frame_left) / \
+      (t.default_frame_top - t.default_frame_bottom) / $golden_ratio
 
     t.default_enter_page_function
   end
@@ -227,6 +255,52 @@ class MyPlots
         t.show_axis(spec)
 
       end
+    end
+  end
+
+  def audacity_test
+    dur, err, sigma = Dvector.fancy_read('audacity-5Hz-test.dat')
+
+    sec_per_day = 3600.0 * 24
+    err *= sec_per_day
+    sigma *= sec_per_day
+
+    t.do_box_labels(nil, 'sample duration (s)', 'accuracy (s/day)')
+
+    t.xaxis_log_values = true
+    dur.safe_log10!
+
+    t.top_edge_type   = AXIS_LINE_ONLY
+
+    t.show_plot([(3).log10, 3.0, 5, -5]) do
+      dur.each_index do |i|
+        t.show_error_bars('x' => dur[i],
+                          'y' => err[i],
+                          'dy' => sigma[i],
+                          'color' => DodgerBlue)
+
+        t.show_marker('x' => dur[i],
+                      'y' => err[i],
+                      'marker' => Bullet,
+                      'scale' => 0.3)
+      end
+
+      # add custom top and right axes
+      #
+      t.right_edge_type = AXIS_WITH_MAJOR_TICKS_AND_NUMERIC_LABELS
+      spec = {
+        'from'          => [(3).log10, 5],
+        'to'            => [3.0, 5],
+        'loc'           => TOP,
+        'ticks_outside' => false,
+        'ticks_inside'  => true,
+        'major_ticks'   => [(10.0).log10, (30.0).log10, (60.0).log10,
+                            (300.0).log10, (600.0).log10],
+        'labels'        => ['10 s', '30 s', '1 min', '5 min', '10 min'],
+        'shift'         => -1.25
+      }
+      t.show_axis(spec)
+
     end
   end
 

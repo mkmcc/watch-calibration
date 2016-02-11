@@ -1,7 +1,9 @@
 * Watch Calibration
 
-  small program that analyzes a recording of a watch or clock and
-  tells you how slow or fast it runs
+  This is a small program that analyzes a recording of a watch or
+  clock and tells you how slow or fast it runs.  You can use this to
+  regulate a mechanical watch using, eg, a cell phone to record its
+  ticking.
 
 * usage
   
@@ -9,67 +11,96 @@
   python fourier.py recording.wav
   #+END_EXAMPLE
   
-  =recording.wav= should be a mono sound file.  results aren't
-  sensitive to the sampling frequency, unless it's too low.  but
-  there's no reason not to just use the 44.1k rate that's pretty
-  standard.
+  The file =recording.wav= should be a mono sound file.  Results
+  aren't sensitive to the sampling frequency, unless it's too low to
+  adequately resolve the 'ticking' sound of the clock.  But the
+  program runs pretty fast, so there's no reason not to just use the
+  44.1 kHz sampling rate that's pretty standard.
+
+  My cell phone has a "voice memo" program that's plenty sensitive for
+  this purpose.
 
 * examples
 
-  with a good-quality recording, you'll see something like this:
+  With a good-quality recording, you'll see something like this:
 
   [[./test-results/plots/strong-signal.png]]
 
-  the top panel shows the last 10 seconds on the recording.  here, you
-  can clearly see the individual ticks (this watch ticks 6 times per
-  second).  and the noise
+  The top panel shows the last 10 seconds on the recording... this
+  lets you evaluate the quality of your data.  Here, you can clearly
+  see the individual ticks, and that this watch ticks 6 times per
+  second.  The signal-to-noise ratio is probably 10ish or so in this
+  example.
 
-  the bottom left plot shows the fourier transform of the recording,
-  zoomed in to the range of 0.5-10 Hz.
+  The bottom left plot shows the fourier transform of the recording,
+  zoomed in to the range of 0.5-10 Hz.  Most clocks should tick
+  somewhere in this range.
 
-  and the bottom right plot shows a fit to the spectral peak, used to
-  estimate the peak frequency to high precision.
+  The bottom right plot shows a fit to the spectral peak, used to
+  estimate the peak frequency to high precision.  This precision
+  easily matches the frequency stability of a mechanical watch.
 
-  with a low quality recording, you'll see something more like this
+  With a (very) low quality recording, you'll instead see something
+  like this:
 
   [[./test-results/plots/weak-signal.png]]
 
-  here, the individual ticks are buried in the noise.  but the program
-  still picks them out!  you lose some precision, however
+  This is a synthetic signal which ticks at 2.0001 Hz.  Here, the
+  individual ticks are buried in the noise... but the program still
+  picks them out!  You need a longer recording to reach the same level
+  of precision, however.
 
 * accuracy
 
   [[./test-results/plots/error-plot.png]]
 
-  i've tested the program using synthetic signals generated a couple
-  of different ways.  the results are summarized in the plot above
+  I've tested the program using synthetic signals generated a couple
+  of different ways.  The results are summarized in the plot above.
 
-  the fractional uncertainty in the measurement scales falls with the
-  length of the recording to the 1.5 power.  it also depends on noise.
+  The fractional uncertainty in the measurement scales falls with the
+  length of the recording to the (3/2) power.  It also depends on the
+  quality of your measurement.  So, while you want to make as good of
+  a recording as you can, it may be easier to make up for quality with
+  length.  I find that 30 seconds of good data is about as good as 5
+  minutes of crappy data.  But leaving your watch and phone alone in
+  your sock drawer for 5 minutes is a lot easier than going out and
+  buying a better microphone.  So it's up to you.
 
-  if your goal is to regulate the clock to ~ 1 second / day, 30
-  seconds or a minute of high-quality recording should do it.  even
-  with a low quality recording, 5 minutes or so should get you there.
+  The dotted black line shows measurements of a real watch.  This runs
+  slow by about 2 seconds/day.  I wanted to adjust it to run with a
+  few seconds per day and found a recording of 30 seconds or one
+  minute was adequate for the task.
 
-  if you have a decent quality recording, in 10 minutes you can get
-  the frequency to one part in 10 million.  pretty impressive, i think!
+  If you have a decent quality recording, in 10 minutes you can get
+  the frequency to one part in 10 million, or about one second per
+  year.  That's pretty impressive, I think!  In principle, you could
+  evaluate even high-quality quartz clocks using this method.
+
+  [[./test-results/plots/audacity-test.png]]
+
+  The plot above shows a test using a synthetic 'tick' signal
+  generated using Audacity.  This shows that the uncertainty reported
+  by the program is a pretty meaningful representation of the true,
+  "1-σ" uncertainty.
 
 * how it works
   
-  i fourier transform the input signal to measure the peak frequency.
-  before transforming, i hit the signal with a Gaussian window... i
-  choose the width so that frequency peaks will have a Gaussian shape
-  with a width of ~3 frequency bins.  This can be fit accurately with
-  a Gaussian profile, yielding a good estimate of the true frequency.
+  The code is pretty simple, and most of the effort went into making
+  it run predictably without any human intervention.  I fourier
+  transform the input signal to measure the peak frequency.  Before
+  transforming, i hit the signal with a Gaussian window... I choose
+  the shape of the window such that frequency peaks will have a
+  Gaussian shape with a width of ~3 frequency bins.  This can be fit
+  accurately with a Gaussian profile, yielding a good estimate of the
+  true frequency.
 
-  i use a scipy function to automatically identify the peaks, which
-  seems to work
+  I use a scipy function to automatically identify the peaks, which
+  seems to work pretty well.
 
-  and i attempt to identify an "optimum" length for the FFT.  it seems
-  to work pretty well.
+  And I attempt to identify an "optimum" length for the FFT.  No
+  problems with it so far.
 
 * todo
   
-  do a better job estimating the uncertainty.  automatically suggest
-  whether the user needs a longer recording, or if we have enough
-  data.
+  Automatically suggest whether the user needs a longer recording, or
+  if we have enough data to make an accurate measurement.
