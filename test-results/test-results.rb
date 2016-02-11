@@ -273,6 +273,11 @@ class MyPlots
     t.top_edge_type   = AXIS_LINE_ONLY
 
     t.show_plot([(3).log10, 3.0, 5, -5]) do
+      old_width = t.line_width
+      t.line_width = 0.5
+      t.show_polyline([(3).log10, 3.0], [0.0, 0.0])
+      t.line_width = old_width
+
       dur.each_index do |i|
         t.show_error_bars('x' => dur[i],
                           'y' => err[i],
