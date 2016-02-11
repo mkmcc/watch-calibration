@@ -62,8 +62,8 @@
   quality of your measurement.  So, while you want to make as good of
   a recording as you can, it may be easier to make up for quality with
   quantity.  I find that 5 minutes of crappy data is about as good as
-  30 seconds of good data.  But leaving your watch and phone alone in
-  your sock drawer for 5 minutes is a lot easier than going out and
+  30 seconds of perfect data.  But leaving your watch and phone alone
+  in a sock drawer for 5 minutes is a lot easier than going out and
   buying a better microphone.  So it's up to you.
 
   If the data is so bad that you can't even hear ticks in the
@@ -99,7 +99,8 @@
   the shape of the window such that frequency peaks will have a
   Gaussian shape with a width of ~3 frequency bins.  This can be fit
   accurately with a Gaussian profile, yielding a good estimate of the
-  true frequency.
+  true frequency.  You can look at the plots to get a sense of how
+  well it's working.
 
   I use a scipy function to automatically identify the peaks, which
   seems to work pretty well.
@@ -109,5 +110,7 @@
 
 * todo
   
-  Automatically suggest whether the user needs a longer recording, or
-  if we have enough data to make an accurate measurement.
+  1. Automatically suggest whether the user needs a longer recording,
+     or if we have enough data to make an accurate measurement.
+  2. improve handing of noise?
+  3. improve the (3/2) scaling?  if that's even possible?
