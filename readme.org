@@ -8,7 +8,11 @@
 * usage
   
   #+BEGIN_EXAMPLE
-  python fourier.py recording.wav
+  $ python fourier.py recording.wav
+
+  initial guess: 6.0       p/m 0.00606  Hz
+  updated guess: 5.9998549 p/m 1.88e-05 Hz
+  error is -2.1 seconds / day
   #+END_EXAMPLE
   
   The file =recording.wav= should be a mono sound file.  My cell phone
