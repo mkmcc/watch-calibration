@@ -154,17 +154,8 @@ class MyPlots
     #
     dur, freq, sigma = Dvector.fancy_read('seiko-convergence.dat')
 
-    # realfreq = freq[-1]
-
-    # dur   = dur[0...-1]
-    # freq  = freq[0...-1]
-    # sigma = sigma[0...-1]
-
-    realfreq = 6.0
-
-    freq = (freq-realfreq)/realfreq * (3600*24)
-
-    sigma *= (3600*24)/5
+    freq *= (3600*24)
+    sigma *= (3600*24)
 
     t.show_polyline(dur.safe_log10, freq.abs.safe_log10,
                     Black, 'Seiko Watch', Line_Type_Dot)
@@ -172,10 +163,8 @@ class MyPlots
     dur.each_index do |i|
       f = (freq[i]).abs
 
-      sigma = 4.0 * (dur[i]/10.0)**-1.5
-
-      dyp = (f+sigma).safe_log10 - f.safe_log10
-      dym = f.safe_log10 - (f-sigma).safe_log10
+      dyp = (f+sigma[i]).safe_log10 - f.safe_log10
+      dym = f.safe_log10 - (f-sigma[i]).safe_log10
 
       t.show_error_bars('x' => (dur[i]).log10,
                         'y' => f.safe_log10,
@@ -202,7 +191,7 @@ class MyPlots
     t.legend_text_dy = 1.25
 
     t.show_plot_with_legend('plot_right_margin'  => 0.0,
-                            'legend_left_margin' => 0.05,
+                            'legend_left_margin' => 0.1,
                             'legend_top_margin'  => 0.6,
                             'legend_scale' => 0.8) do
 
