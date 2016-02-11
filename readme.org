@@ -7,7 +7,7 @@
 
   with a good-quality recording, you'll see something like this:
 
-  [[test-results/plots/strong-signal.png]]
+  [[./test-results/plots/strong-signal.png]]
 
   the top panel shows the last 10 seconds on the recording.  here, you
   can clearly see the individual ticks (this watch ticks 6 times per
@@ -21,11 +21,11 @@
 
   with a low quality recording, you'll see something more like this
 
-  [[test-results/plots/weak-signal.png]]
+  [[./test-results/plots/weak-signal.png]]
 
   here, the individual ticks are buried in the noise.  but the program
   still picks them out!  you lose some precision, however
 
 * accuracy
 
-  [[test-results/plots/error-plot.png]]
+  [[./test-results/plots/error-plot.png]]
