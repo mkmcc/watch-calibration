@@ -1,0 +1,9 @@
+# [1] = duation, [2] = frequency, [3] = estimated error
+# (derived from seiko-feb-2_2.wav)
+#
+10  5.999489   5.2e-05
+15  6.000316   3.4e-05
+30  5.999832   1.7e-05
+60  5.999803   8.6e-06
+120 5.9998499  4.3e-06
+

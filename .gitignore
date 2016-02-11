@@ -1,0 +1,6 @@
+raw-recordings/
+watch-recordings/
+test*
+mash
+*.m
+*.nb
