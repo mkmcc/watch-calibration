@@ -61,15 +61,22 @@
   length of the recording to the (3/2) power.  It also depends on the
   quality of your measurement.  So, while you want to make as good of
   a recording as you can, it may be easier to make up for quality with
-  length.  I find that 30 seconds of good data is about as good as 5
-  minutes of crappy data.  But leaving your watch and phone alone in
+  quantity.  I find that 5 minutes of crappy data is about as good as
+  30 seconds of good data.  But leaving your watch and phone alone in
   your sock drawer for 5 minutes is a lot easier than going out and
   buying a better microphone.  So it's up to you.
+
+  If the data is so bad that you can't even hear ticks in the
+  recording, you may be in trouble, though.  Try again in a quieter
+  place, or find a better microphone.  (And, of course, make sure your
+  clock actually ticks.)
 
   The dotted black line shows measurements of a real watch.  This runs
   slow by about 2 seconds/day.  I wanted to adjust it to run with a
   few seconds per day and found a recording of 30 seconds or one
-  minute was adequate for the task.
+  minute was adequate for the task.  You nudge the regulator bar,
+  record for a minute, nudge again, and so on until you get an answer
+  you're happy with.
 
   If you have a decent quality recording, in 10 minutes you can get
   the frequency to one part in 10 million, or about one second per
