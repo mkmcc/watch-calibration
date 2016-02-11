@@ -11,14 +11,9 @@
   python fourier.py recording.wav
   #+END_EXAMPLE
   
-  The file =recording.wav= should be a mono sound file.  Results
-  aren't sensitive to the sampling frequency, unless it's too low to
-  adequately resolve the 'ticking' sound of the clock.  But the
-  program runs pretty fast, so there's no reason not to just use the
-  44.1 kHz sampling rate that's pretty standard.
-
-  My cell phone has a "voice memo" program that's plenty sensitive for
-  this purpose.
+  The file =recording.wav= should be a mono sound file.  My cell phone
+  has a "voice memo" program that records audio using the built-in
+  microphone.  It's plenty sensitive for this purpose.
 
 * examples
 
@@ -32,23 +27,24 @@
   second.  The signal-to-noise ratio is probably 10ish or so in this
   example.
 
-  The bottom left plot shows the fourier transform of the recording,
-  zoomed in to the range of 0.5-10 Hz.  Most clocks should tick
-  somewhere in this range.
+  The bottom left plot shows the Fourier transform of the recording,
+  zoomed in to the range of 0.5-10 Hz.  The spike in this plot
+  corresponds to the tick frequency of the watch.  It's close to 6
+  ticks/per second, where it should be... but how close?
 
-  The bottom right plot shows a fit to the spectral peak, used to
-  estimate the peak frequency to high precision.  This precision
-  easily matches the frequency stability of a mechanical watch.
+  The bottom right plot shows a fit to the peak, used to estimate the
+  frequency to high precision.  This precision easily matches the
+  frequency stability of a mechanical watch (which varies slightly due
+  to differences in temperature and orientation, among other things).
 
   With a (very) low quality recording, you'll instead see something
   like this:
 
   [[./test-results/plots/weak-signal.png]]
 
-  This is a synthetic signal which ticks at 2.0001 Hz.  Here, the
-  individual ticks are buried in the noise... but the program still
-  picks them out!  You need a longer recording to reach the same level
-  of precision, however.
+  Here, the individual ticks are buried in the noise... but the
+  program still picks them out!  You need a longer recording to reach
+  the same level of precision, however.
 
 * accuracy
 
@@ -71,17 +67,12 @@
   place, or find a better microphone.  (And, of course, make sure your
   clock actually ticks.)
 
-  The dotted black line shows measurements of a real watch.  This runs
-  slow by about 2 seconds/day.  I wanted to adjust it to run with a
-  few seconds per day and found a recording of 30 seconds or one
-  minute was adequate for the task.  You nudge the regulator bar,
-  record for a minute, nudge again, and so on until you get an answer
-  you're happy with.
-
-  If you have a decent quality recording, in 10 minutes you can get
-  the frequency to one part in 10 million, or about one second per
-  year.  That's pretty impressive, I think!  In principle, you could
-  evaluate even high-quality quartz clocks using this method.
+  The dotted black line shows measurements of a real watch.  I wanted
+  to adjust it to run with a few seconds per day and found a recording
+  of 30 seconds or one minute was adequate for the task.  You nudge
+  the regulator bar, record for a minute, nudge again, and so on until
+  you get an answer you're happy with.  I got it regulated to within
+  about 2 seconds per day, which was my goal.
 
   [[./test-results/plots/audacity-test.png]]
 
@@ -92,8 +83,8 @@
 
 * how it works
   
-  The code is pretty simple, and most of the effort went into making
-  it run predictably without any human intervention.  I fourier
+  The code is pretty straightforward, and most of the effort went into
+  making it run predictably without any human intervention.  I Fourier
   transform the input signal to measure the peak frequency.  Before
   transforming, i hit the signal with a Gaussian window... I choose
   the shape of the window such that frequency peaks will have a
@@ -107,6 +98,11 @@
 
   And I attempt to identify an "optimum" length for the FFT.  No
   problems with it so far.
+
+  Results aren't sensitive to the sampling frequency, unless it's too
+  low to adequately resolve the 'ticking' sound of the clock.  But the
+  program runs pretty fast, so there's no reason not to just use the
+  44.1 kHz sampling rate that's pretty standard.
 
 * todo
   
