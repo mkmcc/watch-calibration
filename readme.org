@@ -76,7 +76,9 @@
   of 30 seconds or one minute was adequate for the task.  You nudge
   the regulator bar, record for a minute, nudge again, and so on until
   you get an answer you're happy with.  I got it regulated to within
-  about 2 seconds per day, which was my goal.
+  about 2 seconds per day, which was my goal.  That translates to an
+  error of less than a hundredth of a tick over the span of the
+  recording, which is pretty impressive, I think!
 
   [[./test-results/plots/audacity-test.png]]
 
