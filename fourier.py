@@ -59,7 +59,7 @@ def get_period(samples, rate, plot=False):
     # ... these can be accurately fit with gaussian profiles to centroid
     # ... precise frequency
     #
-    w = signal.gaussian(samples.shape[0], std=samples.shape[0]/7)
+    w = signal.windows.gaussian(samples.shape[0], std=samples.shape[0]/7)
 
     f1 = rfft(samples*w)
     f1 = np.abs(f1)
@@ -159,7 +159,7 @@ def analyze_file(fname):
         rate, samples = wavfile.read(fname)
         minfreq = 1.0 * rate / samples.shape[0]
     except:
-        print "error reading file {0}".format(fname)
+        print ("error reading file {0}".format(fname))
         exit(1)
 
     n = bestFFTlength(samples.shape[0])
@@ -169,7 +169,7 @@ def analyze_file(fname):
     fguess, fguessrefined = get_period(samples, rate, True)
 
     sigfigs = int(round(log10(fguess/minfreq))) + 1
-    print "initial guess: {0} p/m {1:.3} Hz".format(round(fguess, sigfigs), minfreq)
+    print ("initial guess: {0} p/m {1:.3} Hz".format(round(fguess, sigfigs), minfreq))
 
 
     # estimate error and report results
@@ -187,7 +187,7 @@ def analyze_file(fname):
     sigma = abs(fguessrefined2-fguessrefined) / 2**1.5
     sigfigs = int(round(log10(fguessrefined/sigma))) + 1
 
-    print "updated guess: {0} p/m {1:.3} Hz".format(round(fguessrefined, sigfigs), sigma)
+    print ("updated guess: {0} p/m {1:.3} Hz".format(round(fguessrefined, sigfigs), sigma))
 
 
     # estimate the error and report
@@ -197,22 +197,21 @@ def analyze_file(fname):
 
     if err**2 <= sigma**2:
         err = sigma
-        print "error consistent with zero.  below is an upper limit."
-        print "record for a longer time and repeat"
-        print ""
+        print ("error consistent with zero.  below is an upper limit.")
+        print ("record for a longer time and repeat")
 
     if abs(err) * 60 >= 1:
-        print "error is {0:.1f} seconds / minute".format(err*60)
+        print ("error is {0:.1f} seconds / minute".format(err*60))
     elif abs(err) * 3600 >= 1:
-        print "error is {0:.1f} seconds / hour".format(err*3600)
+        print ("error is {0:.1f} seconds / hour".format(err*3600))
     elif abs(err) * 3600*24 >= 1:
-        print "error is {0:.1f} seconds / day".format(err*3600*24)
+        print ("error is {0:.1f} seconds / day".format(err*3600*24))
     elif abs(err) * 3600*24*30 >= 1:
-        print "error is {0:.1f} seconds / month".format(err*3600*24*30)
+        print ("error is {0:.1f} seconds / month".format(err*3600*24*30))
     elif abs(err) * 3600*24*365.25 >= 1:
-        print "error is {0:.1f} seconds / year".format(err*3600*24*365.25)
+        print ("error is {0:.1f} seconds / year".format(err*3600*24*365.25))
     else:
-        print "it's perfect"
+        print ("it's perfect")
 
 
 
@@ -282,7 +281,7 @@ def test_accuracy():
     s = np.zeros(d.shape[0])
 
     for i,dur in enumerate(d):
-        print dur
+        print (dur)
         mean, err = geterr(dur, 0.6)
         e[i] = mean
         s[i] = err
@@ -291,7 +290,7 @@ def test_accuracy():
 
     np.savetxt('44.1k-6Hz-n0.3.dat',out)
     for i,dur in enumerate(d):
-        print dur
+        print (dur)
         mean, err = geterr(dur, 0.6)
         e[i] = mean
         s[i] = err
@@ -301,7 +300,7 @@ def test_accuracy():
 
     np.savetxt('44.1k-6Hz-n0.1.dat',out)
     for i,dur in enumerate(d):
-        print dur
+        print (dur)
         mean, err = geterr(dur, 0.6)
         e[i] = mean
         s[i] = err
@@ -311,7 +310,7 @@ def test_accuracy():
 
     np.savetxt('44.1k-6Hz-n0.03.dat',out)
     for i,dur in enumerate(d):
-        print dur
+        print (dur)
         mean, err = geterr(dur, 0.6)
         e[i] = mean
         s[i] = err
@@ -331,7 +330,7 @@ def analyze_audacity_file(fname):
         rate, samples = wavfile.read(fname)
         minfreq = 1.0 * rate / samples.shape[0]
     except:
-        print "error reading file {0}".format(fname)
+        print ("error reading file {0}".format(fname))
         exit(1)
 
     # n = bestFFTlength(samples.shape[0])
